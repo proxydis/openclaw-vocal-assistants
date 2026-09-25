@@ -4,6 +4,11 @@ Talk to your [OpenClaw](https://github.com/openclaw/openclaw) agents by name, fr
 local network. Say *"Neo, lance les tests"* and Neo wakes up, works, answers out loud with his own
 voice, and shows the details on screen. Call Ada while Neo is still busy: she starts in parallel.
 
+![J.A.R.V.I.S: Ada answers out loud. Her orb pulses with her voice, the subtitles light up word by word, the detail of her answer (a table) opens in a floating window, and the activity rail shows every agent's state.](docs/screenshot.jpg)
+
+*Ada answers a spoken question: short sentences out loud (lit word by word in the subtitles), the table in
+her detail window, her pulse line in the agent rail.*
+
 Speech recognition and speech synthesis run **100 % on your machine** (no cloud service, no
 subscription). The agents are your normal OpenClaw agents, reached through your local OpenClaw
 Gateway, with their own sessions, tools and memory.
