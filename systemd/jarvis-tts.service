@@ -1,0 +1,11 @@
+[Unit]
+Description=JARVIS - synthese vocale (Piper)
+
+[Service]
+WorkingDirectory=@APP@
+ExecStart=@APP@/.venv/bin/python tts/tts_server.py 8179
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target

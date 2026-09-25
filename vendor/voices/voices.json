@@ -1,0 +1,214 @@
+{
+  "_meta": {
+    "doc": "Catalogue de voix, independant des agents. Cle = identifiant neutre et stable (fr-<registre m|f>-<caractere>[-effet]) ; un agent y est associe par le champ `voice` de config/agents.json, sinon une voix lui est attribuee automatiquement (slot determine par le hachage de son id, voix libre suivante en cas de collision ; meme regle dans server/agents.mjs et tts/tts_server.py). engine = supertonic (Supertone Supertonic 3, francais natif, 10 styles integres F1-F5/M1-M5, vitesse native, service tts/supertonic_server.py :8182, RTF ~0.25, ~0.7 Go), pockettts (Kyutai Pocket TTS, francais natif, clonage, service tts/pockettts_server.py :8181, RTF 0.4, 1.2 Go), openvoice (MeloTTS FR + OpenVoice v2, service :8180, RTF 0.9, 2.9 Go, unite jarvis-tts-ov a activer), kokoro (ff_siwis) ou piper (instantane, repli automatique). Les blocs des cinq moteurs sont conserves : changer engine suffit (+ activer l unite du sidecar). pitch = decalage de hauteur post-synthese ; fx = robot. register = m/f : en cas de synthese anormalement longue, repli Piper sur la PREMIERE voix du catalogue ayant le meme registre (l ordre des cles compte).",
+    "kokoro_note": "Verdict de l'utilisateur 2026-09-23 : seule ff_siwis (native) est acceptable, toutes les voix Kokoro entrainees en anglais ont un accent fort. Les blocs kokoro des voix feminines sont donc des variantes de ff_siwis ; les voix masculines n ont pas d equivalent Kokoro francais (repli Piper tom/pierre).",
+    "qa": "Verifier toute modification avec : .venv/bin/python tts/voice_qa.py",
+    "openvoice_note": "Verdict de l'utilisateur 2026-09-23 23:03 : il faut de vrais timbres distincts et des voix masculines -> clonage. Sources/licences des extraits : vendor/voices/refs/SOURCES.md.",
+    "pockettts_note": "Retenu 2026-09-24 00:20 apres deblocage des poids gated (jeton HF dans config/hf-token.txt). Memes extraits de reference que openvoice (vendor/voices/refs).",
+    "cadence": null,
+    "cadence_note": "Normalisation de cadence (etirement temporel) DESACTIVEE le 2026-09-24 00:55 : l'utilisateur a entendu des voix moins claires avec echo. Ne pas reactiver.",
+    "ref_speed_note": "pockettts.ref_speed : compression temporelle (WSOLA) de l extrait de reference uniquement ; la sortie du modele n est pas retouchee. Mesure : x1.25 sur la reference = sortie ~18 % plus rapide, intelligibilite 0.94 -> 0.91. Cible : cadence de fr-m-grave.",
+    "supertonic_note": "Retenu 2026-09-24 sur banc comparatif (Supertonic 3 / Pocket TTS / Qwen3-TTS / Voxtral) : seul moteur nettement plus rapide que le temps reel sur la machine de reference (Ryzen 7 6800H, CPU seul) (RTF 0.22-0.29 CPU, 0.7 Go) ; Pocket TTS sautait des morceaux de phrase. Styles choisis pour maximiser l ecart de timbre mesure (MFCC) : M1/M4/M5/M3 pour les 4 voix masculines, F3/F4/F2 pour les 3 feminines. supertonic.speed = vitesse native du modele (0.7-2.0, pas de retouche de la sortie), calibree par voix pour ~12.5 lettres/s. Les nombres sont ecrits en toutes lettres avant la synthese (tts/fr_normalize.py) : sans cela le modele lit mal heures, montants et codes."
+  },
+  "voices": {
+    "fr-m-clair": {
+      "engine": "supertonic",
+      "register": "m",
+      "pitch": 1.0,
+      "kokoro": {
+        "voice": "bm_george",
+        "speed": 1.0
+      },
+      "piper": {
+        "model_file": "fr_FR-upmc-medium.onnx",
+        "speaker_id": 1,
+        "length_scale": 1.0
+      },
+      "note": "Homme clair : M1 (F0 ~125 Hz, timbre le plus brillant). Supertonic 3 depuis le 2026-09-24. Avant (bloc pockettts conserve) : Homme clair (F0 ~146 Hz). Pocket TTS (Kyutai), timbre clone de alan_sb.wav (LibriVox, domaine public). Premiere voix masculine = repli Piper du registre m.",
+      "openvoice": {
+        "ref": "alan_sb.wav",
+        "speed": 1.0
+      },
+      "pockettts": {
+        "ref": "alan_sb.wav",
+        "ref_speed": 1.0
+      },
+      "tempo": 1.0,
+      "supertonic": {
+        "voice": "M1",
+        "speed": 1.14
+      }
+    },
+    "fr-f-douce": {
+      "engine": "supertonic",
+      "register": "f",
+      "pitch": 1.0,
+      "kokoro": {
+        "voice": "ff_siwis",
+        "speed": 0.94
+      },
+      "piper": {
+        "model_file": "fr_FR-siwis-medium.onnx",
+        "speaker_id": null,
+        "length_scale": 1.03
+      },
+      "note": "Femme douce : F2 (F0 ~197 Hz ; styles permutes avec fr-f-ferme apres ecoute par l utilisateur, 2026-09-24). Supertonic 3 depuis le 2026-09-24. Avant (bloc pockettts conserve) : Femme douce (F0 ~271 Hz). Pocket TTS (Kyutai), timbre clone de eva_leiri.wav (LibriVox, domaine public). Premiere voix feminine = repli Piper du registre f.",
+      "openvoice": {
+        "ref": "eva_leiri.wav",
+        "speed": 0.95
+      },
+      "pockettts": {
+        "ref": "eva_leiri.wav",
+        "ref_speed": 1.25
+      },
+      "tempo": 1.0,
+      "supertonic": {
+        "voice": "F2",
+        "speed": 1.08
+      }
+    },
+    "fr-m-direct": {
+      "engine": "supertonic",
+      "register": "m",
+      "pitch": 1.0,
+      "kokoro": {
+        "voice": "ff_siwis",
+        "speed": 0.98,
+        "pitch_if_kokoro": 0.82
+      },
+      "piper": {
+        "model_file": "fr_FR-tom-medium.onnx",
+        "speaker_id": null,
+        "length_scale": 0.96
+      },
+      "note": "Homme direct : M4 (F0 ~124 Hz, timbre sombre). Supertonic 3 depuis le 2026-09-24. Avant (bloc pockettts conserve) : Homme direct (F0 ~123 Hz). Pocket TTS (Kyutai), timbre clone de neo_nm.wav (LibriVox, domaine public)",
+      "openvoice": {
+        "ref": "neo_nm.wav",
+        "speed": 1.02
+      },
+      "pockettts": {
+        "ref": "neo_nm.wav",
+        "ref_speed": 1.0
+      },
+      "tempo": 1.0,
+      "supertonic": {
+        "voice": "M4",
+        "speed": 1.08
+      }
+    },
+    "fr-f-precise": {
+      "engine": "supertonic",
+      "register": "f",
+      "pitch": 1.0,
+      "kokoro": {
+        "voice": "ff_siwis",
+        "speed": 1.05
+      },
+      "piper": {
+        "model_file": "fr_FR-upmc-medium.onnx",
+        "speaker_id": 0,
+        "length_scale": 0.98
+      },
+      "note": "Femme precise : F4 (F0 ~194 Hz, intonation reguliere). Supertonic 3 depuis le 2026-09-24. Avant (bloc pockettts conserve) : Femme precise (F0 ~174 Hz). Pocket TTS (Kyutai), timbre clone de ada_cs.wav (LibriVox, domaine public)",
+      "openvoice": {
+        "ref": "ada_cs.wav",
+        "speed": 1.04
+      },
+      "pockettts": {
+        "ref": "ada_cs.wav",
+        "ref_speed": 1.12
+      },
+      "tempo": 1.0,
+      "supertonic": {
+        "voice": "F4",
+        "speed": 0.98
+      }
+    },
+    "fr-m-grave": {
+      "engine": "supertonic",
+      "register": "m",
+      "pitch": 1.0,
+      "kokoro": {
+        "voice": "am_michael",
+        "speed": 0.95
+      },
+      "piper": {
+        "model_file": "fr_FR-tom-medium.onnx",
+        "speaker_id": null,
+        "length_scale": 1.06
+      },
+      "note": "Homme grave : M5 (F0 ~86 Hz, le plus grave). Supertonic 3 depuis le 2026-09-24. Avant (bloc pockettts conserve) : Homme grave (F0 ~104 Hz), cadence de reference. Pocket TTS (Kyutai), timbre clone de morpheus_mk.wav (LibriVox, domaine public)",
+      "openvoice": {
+        "ref": "morpheus_mk.wav",
+        "speed": 0.94
+      },
+      "pockettts": {
+        "ref": "morpheus_mk.wav",
+        "ref_speed": 1.0
+      },
+      "tempo": 1.0,
+      "supertonic": {
+        "voice": "M5",
+        "speed": 1.14
+      }
+    },
+    "fr-f-ferme": {
+      "engine": "supertonic",
+      "register": "f",
+      "pitch": 1.0,
+      "kokoro": {
+        "voice": "ff_siwis",
+        "speed": 1.06
+      },
+      "piper": {
+        "model_file": "fr_FR-siwis-medium.onnx",
+        "speaker_id": null,
+        "length_scale": 0.97
+      },
+      "note": "Femme ferme : F3 (F0 ~185 Hz ; styles permutes avec fr-f-douce apres ecoute par l utilisateur, 2026-09-24). Supertonic 3 depuis le 2026-09-24. Avant (bloc pockettts conserve) : Femme ferme (F0 ~202 Hz). Pocket TTS (Kyutai), timbre clone de trinity_chj.wav (LibriVox, domaine public)",
+      "openvoice": {
+        "ref": "trinity_chj.wav",
+        "speed": 1.03
+      },
+      "pockettts": {
+        "ref": "trinity_chj.wav",
+        "ref_speed": 1.25
+      },
+      "tempo": 1.0,
+      "supertonic": {
+        "voice": "F3",
+        "speed": 1.18
+      }
+    },
+    "fr-m-grave-robot": {
+      "engine": "supertonic",
+      "register": "m",
+      "pitch": 1.0,
+      "fx": "robot",
+      "fx_amount": 0.85,
+      "kokoro": {
+        "voice": "ff_siwis",
+        "speed": 1.0
+      },
+      "piper": {
+        "model_file": "fr_FR-upmc-medium.onnx",
+        "speaker_id": 1,
+        "length_scale": 1.02
+      },
+      "note": "Homme grave : M3 (F0 ~106 Hz) + traitement robot. Supertonic 3 depuis le 2026-09-24. Avant (bloc pockettts conserve) : Homme grave (F0 ~122 Hz) + traitement robot (voix synthetique). Pocket TTS, timbre clone de axiom_gf.wav (LibriVox)",
+      "openvoice": {
+        "ref": "axiom_rab.wav",
+        "speed": 1.0
+      },
+      "pockettts": {
+        "ref": "axiom_gf.wav",
+        "ref_speed": 1.12
+      },
+      "tempo": 1.0,
+      "supertonic": {
+        "voice": "M3",
+        "speed": 0.94
+      }
+    }
+  }
+}

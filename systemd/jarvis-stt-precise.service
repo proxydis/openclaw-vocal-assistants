@@ -1,0 +1,12 @@
+[Unit]
+Description=JARVIS - reconnaissance vocale precise (whisper large-v3-turbo, Vulkan)
+
+[Service]
+WorkingDirectory=@APP@/vendor/whisper.cpp
+Environment=LD_LIBRARY_PATH=@APP@/vendor/whisper.cpp/build/bin
+ExecStart=@APP@/vendor/whisper.cpp/build/bin/whisper-server -m ../models/ggml-large-v3-turbo-q5_0.bin --host 127.0.0.1 --port 8188 -l fr -t 8 -bo 1 -bs 1 -nt
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target

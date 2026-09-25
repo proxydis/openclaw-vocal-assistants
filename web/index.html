@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#03050a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>J.A.R.V.I.S</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-state="sleep">
+  <canvas id="backdrop" aria-hidden="true"></canvas>
+
+  <nav id="crew" aria-label="Agents"></nav>
+
+  <main id="stage">
+    <div id="orb-wrap">
+      <div class="reticle" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <canvas id="orb" aria-hidden="true"></canvas>
+      <div id="avatar" aria-hidden="true">
+        <div class="holo"><img id="avatar-img" alt=""><div id="avatar-sigil"></div></div>
+      </div>
+    </div>
+    <div id="ident">
+      <h1 id="agent-name">&nbsp;</h1>
+      <p id="agent-state">&nbsp;</p>
+    </div>
+  </main>
+
+  <section id="subtitles" aria-live="polite"></section>
+
+  <div id="windows" aria-live="polite"></div>
+
+  <form id="typebar" hidden autocomplete="off">
+    <input id="typebox" type="text" placeholder="Prénom, …" enterkeyhint="send" spellcheck="false">
+  </form>
+
+  <footer id="controls">
+    <button id="btn-mic" class="ctl" aria-label="Micro" title="Micro (M)"><svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0M12 17v4m-3 0h6"/></svg></button>
+    <button id="btn-stop" class="ctl" aria-label="Stop" title="Couper la voix (Échap)"><svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/></svg></button>
+    <button id="btn-type" class="ctl" aria-label="Clavier" title="Écrire (/)"><svg viewBox="0 0 24 24"><path d="M4 7h16v10H4zM7 10h.01M10 10h.01M13 10h.01M16 10h.01M8 14h8"/></svg></button>
+    <button id="btn-history" class="ctl" aria-label="Historique" title="Historique des échanges (H)"><svg viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1M3.5 4.5v4h4M12 7.5V12l3 2"/></svg></button>
+    <button id="btn-avatars" class="ctl" aria-label="Avatars" title="Changer les avatars"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg></button>
+  </footer>
+
+  <div id="avatar-manager" hidden></div>
+  <div id="toast" role="status"></div>
+  <div id="boot" hidden aria-hidden="true"></div>
+
+  <div id="gate">
+    <button id="gate-btn">
+      <span class="gate-ring"></span>
+      <span class="gate-label">ACTIVER</span>
+    </button>
+    <p id="gate-hint">Touchez pour réveiller l'interface vocale</p>
+  </div>
+
+  <script src="vendor/ort.wasm.min.js"></script>
+  <script src="vendor/vad.bundle.min.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

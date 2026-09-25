@@ -1,0 +1,27 @@
+vendor/*
+!vendor/WHISPER.md
+!vendor/voices/
+vendor/voices/*
+!vendor/voices/voices.json
+!vendor/voices/TTS.md
+node_modules/
+.venv/
+certs/
+logs/
+config/access-code.txt
+__pycache__/
+vendor/tts-eval2/*
+!vendor/tts-eval2/RAPPORT.md
+!vendor/tts-eval2/*.py
+.venv-openvoice/
+!vendor/voices/refs/
+config/hf-token.txt
+config/hf-token2.txt
+# config locale (les *.example.json sont versionnés)
+config/settings.json
+config/pronunciation.json
+config/agents.json
+# avatars personnalisés (web/avatars/defaults/ et generated/ ne sont que des exemples)
+web/avatars/*.jpg
+# journal de décisions : local, hors dépôt (le dépôt deviendra public)
+DECISIONS.md

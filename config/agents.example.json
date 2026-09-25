@@ -1,0 +1,12 @@
+{
+  "_doc": "FACULTATIF. Sans config/agents.json, le serveur lit les agents dans ~/.openclaw/openclaw.json (agents.entries : id, name/identity.name, identity.emoji) et attribue alias, couleur et voix automatiquement. Copier ce fichier en config/agents.json (ignoré par git) pour affiner. Un bloc par agent OpenClaw : `id` = id OpenClaw (l'agent par défaut est `main`) ; `name` = prénom affiché et prononcé ; `aliases` = formes que Whisper peut produire pour ce prénom (minuscules, sans accents ; défaut : le prénom et l'id) ; `color` = teinte néon de l'orbe (défaut : palette cyclique) ; `glyph` = symbole (défaut ◈) ; `voice` = identifiant du catalogue vendor/voices/voices.json (défaut : attribution automatique stable par id). Avatar : déposer web/avatars/<prénom en minuscules, sans accents>.jpg (facultatif : à défaut un sigle holographique est généré). L'équipe ci-dessous n'est qu'un exemple.",
+  "agents": [
+    { "id": "main",     "name": "Axiom",    "aliases": ["axiom", "axiome", "axion", "axium"],                                                    "color": "#4f86ff", "glyph": "🜂", "voice": "fr-m-grave-robot" },
+    { "id": "neo",      "name": "Neo",      "aliases": ["neo", "neho", "nio", "neau", "neos", "nemo"],                                           "color": "#39ff88", "glyph": "⚡", "voice": "fr-m-direct" },
+    { "id": "alan",     "name": "Alan",     "aliases": ["alan", "allan", "alain", "alane", "alanne", "allen", "alun", "elan", "helan", "alans"], "color": "#22d3ee", "glyph": "⚡", "voice": "fr-m-clair" },
+    { "id": "ada",      "name": "Ada",      "aliases": ["ada", "adda", "hada", "adah", "adam", "aida"],                                          "color": "#a78bfa", "glyph": "🔍", "voice": "fr-f-precise" },
+    { "id": "eva",      "name": "Eva",      "aliases": ["eva", "evah", "ava", "evas", "eve", "heva", "iva"],                                     "color": "#ff7eb6", "glyph": "🌸", "voice": "fr-f-douce" },
+    { "id": "morpheus", "name": "Morpheus", "aliases": ["morpheus", "morpheous", "morphee", "morfeus", "morphus"],                               "color": "#ff4d6d", "glyph": "🛡️", "voice": "fr-m-grave" },
+    { "id": "trinity",  "name": "Trinity",  "aliases": ["trinity", "triniti", "trinite", "trinitie"],                                            "color": "#ffb454", "glyph": "🧩", "voice": "fr-f-ferme" }
+  ]
+}

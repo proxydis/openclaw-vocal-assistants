@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# JARVIS control script. Usage: bin/jarvis <install|start|stop|restart|status|logs|code|url|certs|test|uninstall>
+set -euo pipefail
+APP="$(cd "$(dirname "$0")/.." && pwd)"
+UNITS=(jarvis-stt jarvis-stt-precise jarvis-tts jarvis-tts-st jarvis-web)
+UNIT_DIR="$HOME/.config/systemd/user"
+ip() { hostname -I | tr ' ' '\n' | grep -E '^[0-9]+\.' | head -1; }
+
+case "${1:-status}" in
+  install)
+    mkdir -p "$UNIT_DIR"
+    NODE="$(command -v node)"
+    for u in "${UNITS[@]}"; do sed -e "s#@APP@#$APP#g" -e "s#@NODE@#$NODE#g" "$APP/systemd/$u.service" > "$UNIT_DIR/$u.service"; done
+    systemctl --user daemon-reload
+    systemctl --user enable --now "${UNITS[@]}"
+    [ -f "$APP/certs/server.pem" ] || "$APP/bin/make-certs.sh"
+    systemctl --user restart jarvis-web
+    "$0" url ;;
+  start|stop|restart) systemctl --user "$1" "${UNITS[@]}" ;;
+  status)
+    for u in "${UNITS[@]}"; do printf '%-20s %s\n' "$u" "$(systemctl --user is-active "$u" || true)"; done
+    curl -fsS "http://127.0.0.1:8480/healthz" 2>/dev/null && echo || echo "serveur web injoignable" ;;
+  logs) journalctl --user -f -o cat $(printf -- '-u %s ' "${UNITS[@]}") ;;
+  code) cat "$APP/config/access-code.txt" ;;
+  url)
+    echo "Sur ce PC      : http://localhost:8480"
+    echo "Sur le réseau  : https://$(ip):8443   (code d'accès : $(cat "$APP/config/access-code.txt" 2>/dev/null || echo 'généré au premier démarrage'))"
+    echo "Certificat CA  : https://$(ip):8443/ca.crt  (à importer une fois par appareil)" ;;
+  certs) "$APP/bin/make-certs.sh" && systemctl --user restart jarvis-web ;;
+  test)
+    cd "$APP/server"
+    node --test test/*.test.mjs
+    (cd "$APP" && .venv/bin/python -m unittest tts/test_fr_normalize.py)
+    node test/e2e.mjs --wait 90   # « <premier agent>, dis simplement bonjour. »
+    node test/scenario.mjs ;;
+  uninstall)
+    systemctl --user disable --now "${UNITS[@]}" || true
+    for u in "${UNITS[@]}"; do rm -f "$UNIT_DIR/$u.service"; done
+    systemctl --user daemon-reload ;;
+  *) sed -n 2p "$0"; exit 1 ;;
+esac

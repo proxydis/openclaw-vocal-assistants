@@ -1,0 +1,23 @@
+{
+  "_doc": "Remplacements appliqués avant la synthèse vocale (insensible à la casse, mots entiers). Clé = texte écrit, valeur = façon de le dire en français. Copier en config/pronunciation.json (ignoré par git) pour ajouter vos propres mots, par exemple votre prénom ou ceux de vos agents (« Neo »: « Néo »). Un nom dont la consonne finale doit s'entendre (la voix Supertonic la lit à la française, donc muette ou nasale) : ajouter un « e » final, par exemple « Jordan »: « Jordanne », « Adam »: « Adamme » (sur deux prénoms mesurés au phonème, 0/14 → 11 à 14/14).",
+  "OpenClaw": "Opène Clo",
+  "GitHub": "Guite Heub",
+  "git": "guite",
+  "Slack": "Slaque",
+  "Telegram": "Télégramme",
+  "API": "A P I",
+  "CI": "C I",
+  "PR": "P R",
+  "URL": "U R L",
+  "LLM": "L L M",
+  "GPU": "G P U",
+  "CPU": "C P U",
+  "EFB": "E F B",
+  "JARVIS": "Djarvisse",
+  "OK": "okay",
+  "commit": "commite",
+  "push": "pouche",
+  "merge": "meurdje",
+  "bug": "beugue",
+  "cron": "crone"
+}

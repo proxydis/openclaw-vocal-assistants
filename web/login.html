@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#03050a">
+  <title>J.A.R.V.I.S — accès</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { display: grid; place-content: center; justify-items: center; gap: 28px; grid-template: none; }
+    form { display: grid; justify-items: center; gap: 18px; z-index: 2; }
+    h1 { font-weight: 200; letter-spacing: .6em; margin-right: -.6em; font-size: 22px; color: color-mix(in srgb, var(--c) 55%, white); text-shadow: 0 0 22px var(--c); }
+    input { width: 240px; text-align: center; padding: 13px 18px; border-radius: 99px; border: 1px solid color-mix(in srgb, var(--c) 45%, transparent); background: rgba(3,5,10,.8); color: var(--ink); font: 300 18px var(--mono); letter-spacing: .3em; outline: none; }
+    input:focus { box-shadow: 0 0 24px color-mix(in srgb, var(--c) 30%, transparent); }
+    p { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--dim); min-height: 1.2em; }
+    .shake { animation: shake .4s; } @keyframes shake { 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+  </style>
+</head>
+<body>
+  <form id="f" autocomplete="off">
+    <h1>J.A.R.V.I.S</h1>
+    <input id="code" type="password" inputmode="text" placeholder="code d’accès" autofocus autocapitalize="off">
+    <p id="msg">Code affiché par <b>bin/jarvis code</b> sur la machine hôte</p>
+  </form>
+  <script src="login.js"></script>
+</body>
+</html>

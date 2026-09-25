@@ -1,0 +1,23 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "dependencies": {
+    "@openclaw/gateway-client": "2026.9.4",
+    "@openclaw/gateway-protocol": "2026.9.4",
+    "@ricky0123/vad-web": "0.0.31",
+    "onnxruntime-web": "1.30.0",
+    "ws": "8.21.3"
+  },
+  "devDependencies": {
+    "puppeteer-core": "25.11.0"
+  }
+}

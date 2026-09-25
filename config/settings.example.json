@@ -1,0 +1,19 @@
+{
+  "_doc": "Copier en config/settings.json (ignoré par git) et adapter. userName : prénom de l'utilisateur, utilisé dans le brief envoyé aux agents et pour la phrase de réveil (vide = neutre). sttPrompt (facultatif) : amorce Whisper ; par défaut elle est générée à partir de la liste des agents sous forme de phrases d'exemple complètes (« <Prénom>, quelle heure est-il ? Stop. … ») — une liste nue de prénoms fait halluciner Whisper, garder des phrases entières si vous la remplacez.",
+  "bind": "0.0.0.0",
+  "httpsPort": 8443,
+  "httpPort": 8480,
+  "sttUrl": "http://127.0.0.1:8188",
+  "sttFastUrl": "http://127.0.0.1:8178",
+  "sttFastMaxMs": 1600,
+  "ttsUrl": "http://127.0.0.1:8179",
+  "sessionSuffix": "jarvis",
+  "userName": "",
+  "followUpMs": 120000,
+  "wakePhrases": [
+    "Oui, je vous écoute.",
+    "Je vous écoute.",
+    "À votre écoute."
+  ],
+  "debug": false
+}
